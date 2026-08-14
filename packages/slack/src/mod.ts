@@ -6,6 +6,10 @@ import {
   type TextFormatter,
 } from "@logtape/logtape";
 
+type Fetcher = (
+  ...args: Parameters<typeof globalThis.fetch>
+) => ReturnType<typeof globalThis.fetch>;
+
 export interface SlackSinkOptions {
   readonly webhookUrl: string | URL;
   readonly formatter?: TextFormatter;
@@ -13,7 +17,7 @@ export interface SlackSinkOptions {
   readonly maxMessageLength?: number;
   readonly maxBufferSize?: number;
   readonly maxRetries?: number;
-  readonly fetch?: typeof globalThis.fetch;
+  readonly fetch?: Fetcher;
 }
 
 export function takeBatch(
@@ -41,7 +45,7 @@ export function takeBatch(
 }
 
 export function postSlackMessage(
-  fetcher: typeof globalThis.fetch,
+  fetcher: Fetcher,
   webhookUrl: string | URL,
   text: string,
   maxRetries: number,
@@ -56,7 +60,7 @@ export function postSlackMessage(
 }
 
 async function postSlackMessageWithRetries(
-  fetcher: typeof globalThis.fetch,
+  fetcher: Fetcher,
   webhookUrl: string | URL,
   text: string,
   currRetries: number,
