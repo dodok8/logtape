@@ -1,35 +1,36 @@
 packages:
-- packages/logtape
-- packages/adaptor-bunyan
-- packages/adaptor-log4js
-- packages/adaptor-pino
-- packages/adaptor-winston
-- packages/drizzle-orm
-- packages/express
-- packages/fastify
-- packages/file
-- packages/graphql-yoga
-- packages/hono
-- packages/koa
-- packages/elysia
-- packages/lint
-- packages/otel
-- packages/pretty
-- packages/redaction
-- packages/sentry
-- packages/syslog
-- packages/testing
-- packages/testing-bun
-- packages/testing-node
-- packages/testing-vitest
-- packages/cloudwatch-logs
-- packages/config
-- packages/windows-eventlog
-- docs
-- benchmarks
+  - packages/logtape
+  - packages/adaptor-bunyan
+  - packages/adaptor-log4js
+  - packages/adaptor-pino
+  - packages/adaptor-winston
+  - packages/drizzle-orm
+  - packages/express
+  - packages/fastify
+  - packages/file
+  - packages/graphql-yoga
+  - packages/hono
+  - packages/koa
+  - packages/elysia
+  - packages/lint
+  - packages/otel
+  - packages/pretty
+  - packages/redaction
+  - packages/sentry
+  - packages/slack
+  - packages/syslog
+  - packages/testing
+  - packages/testing-bun
+  - packages/testing-node
+  - packages/testing-vitest
+  - packages/cloudwatch-logs
+  - packages/config
+  - packages/windows-eventlog
+  - docs
+  - benchmarks
 
 allowBuilds:
-  '@biomejs/biome': true
+  "@biomejs/biome": true
   dtrace-provider: true
   esbuild: true
   koffi: true
@@ -69,4 +70,4 @@ catalog:
   vitest: ^4.1.6
 
 ignoredBuiltDependencies:
-- koffi
+  - koffi

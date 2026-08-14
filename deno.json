@@ -18,6 +18,7 @@
     "./packages/pretty",
     "./packages/redaction",
     "./packages/sentry",
+    "./packages/slack",
     "./packages/syslog",
     "./packages/testing",
     "./packages/testing-bun",
@@ -40,7 +41,6 @@
     "@opentelemetry/resources": "npm:@opentelemetry/resources@^2.2.0",
     "@opentelemetry/sdk-logs": "npm:@opentelemetry/sdk-logs@^0.208.0",
     "@opentelemetry/semantic-conventions": "npm:@opentelemetry/semantic-conventions@^1.38.0",
-
     "@std/async": "jsr:@std/async@^1.0.13",
     "@std/collections": "jsr:@std/collections@^1.0.10",
     "@std/dotenv": "jsr:@std/dotenv@^0.225.5",

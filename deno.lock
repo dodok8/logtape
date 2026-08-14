@@ -4867,6 +4867,13 @@
           ]
         }
       },
+      "packages/slack": {
+        "packageJson": {
+          "dependencies": [
+            "npm:@sentry/core@^9.41.0"
+          ]
+        }
+      },
       "packages/windows-eventlog": {
         "packageJson": {
           "dependencies": [
