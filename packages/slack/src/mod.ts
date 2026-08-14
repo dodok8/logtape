@@ -21,7 +21,7 @@ export function takeBatch(
     if (nextLength > maxMessageLength) break;
 
     length = nextLength;
-    count++;
+    count += 1;
   }
 
   if (count === 0) {
@@ -31,4 +31,29 @@ export function takeBatch(
   }
 
   return pending.splice(0, count).join("\n");
+}
+
+export async function postSlackMessage(
+  fetcher: typeof globalThis.fetch,
+  webhookUrl: string | URL,
+  text: string,
+): Promise<void> {
+  const response = await fetcher(webhookUrl, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      text,
+      mrkdwn: false,
+      unfurl_links: false,
+      unfurl_media: false,
+    }),
+  });
+
+  if (!response.ok) {
+    const body = await response.text();
+
+    throw new Error(`Slack webhook returned HTTP ${response.status}: ${body}`);
+  }
 }
