@@ -40,7 +40,22 @@ export function takeBatch(
   return pending.splice(0, count).join("\n");
 }
 
-export async function postSlackMessage(
+export function postSlackMessage(
+  fetcher: typeof globalThis.fetch,
+  webhookUrl: string | URL,
+  text: string,
+  maxRetries: number,
+): Promise<void> {
+  return postSlackMessageWithRetries(
+    fetcher,
+    webhookUrl,
+    text,
+    0,
+    maxRetries,
+  );
+}
+
+async function postSlackMessageWithRetries(
   fetcher: typeof globalThis.fetch,
   webhookUrl: string | URL,
   text: string,
@@ -67,7 +82,7 @@ export async function postSlackMessage(
       setTimeout(resolve, retryAfter * 1_000);
     });
 
-    return postSlackMessage(
+    return postSlackMessageWithRetries(
       fetcher,
       webhookUrl,
       text,
@@ -142,7 +157,6 @@ export function getSlackSink(
         fetcher,
         options.webhookUrl,
         message,
-        0,
         maxRetries,
       );
     })()
