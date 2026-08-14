@@ -20,10 +20,7 @@ export interface SlackSinkOptions {
   readonly fetch?: Fetcher;
 }
 
-export function takeBatch(
-  pending: string[],
-  maxMessageLength = 40_000,
-): string {
+export function takeBatch(pending: string[], maxMessageLength = 4_000): string {
   let length = 0;
   let count = 0;
 
@@ -50,13 +47,7 @@ export function postSlackMessage(
   text: string,
   maxRetries: number,
 ): Promise<void> {
-  return postSlackMessageWithRetries(
-    fetcher,
-    webhookUrl,
-    text,
-    0,
-    maxRetries,
-  );
+  return postSlackMessageWithRetries(fetcher, webhookUrl, text, 0, maxRetries);
 }
 
 async function postSlackMessageWithRetries(
@@ -157,12 +148,7 @@ export function getSlackSink(
 
       nextSendAt = Date.now() + batchInterval;
 
-      await postSlackMessage(
-        fetcher,
-        options.webhookUrl,
-        message,
-        maxRetries,
-      );
+      await postSlackMessage(fetcher, options.webhookUrl, message, maxRetries);
     })()
       .catch(reportError)
       .finally(() => {
