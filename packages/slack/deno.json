@@ -1,0 +1,39 @@
+{
+  "name": "@logtape/slack",
+  "version": "2.4.0",
+  "license": "MIT",
+  "exports": {
+    ".": "./src/mod.ts"
+  },
+  "imports": {
+    "#util": "src/util.deno.ts"
+  },
+  "tasks": {
+    "build": "pnpm build",
+    "test": "deno test",
+    "test:node": {
+      "dependencies": [
+        "build"
+      ],
+      "command": "node --experimental-transform-types --test"
+    },
+    "test:bun": {
+      "dependencies": [
+        "build"
+      ],
+      "command": "bun test"
+    },
+    "test-all": {
+      "dependencies": [
+        "test",
+        "test:node",
+        "test:bun"
+      ]
+    }
+  },
+  "exclude": [
+    "dist/",
+    "npm/",
+    "node_modules/"
+  ]
+}
