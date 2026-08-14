@@ -47,7 +47,7 @@ catalogs:
       version: 1.0.13
     '@std/dotenv':
       specifier: jsr:^0.225.5
-      version: 0.225.5
+      version: 0.225.8
     '@std/path':
       specifier: jsr:^1.1.0
       version: 1.1.0
@@ -828,6 +828,22 @@ importers:
       '@std/dotenv':
         specifier: 'catalog:'
         version: '@jsr/std__dotenv@0.225.5'
+      tsdown:
+        specifier: 'catalog:'
+        version: 0.12.7(typescript@5.8.3)
+      typescript:
+        specifier: 'catalog:'
+        version: 5.8.3
+
+  packages/slack:
+    dependencies:
+      '@logtape/logtape':
+        specifier: workspace:^
+        version: link:../logtape
+    devDependencies:
+      '@std/dotenv':
+        specifier: 'catalog:'
+        version: '@jsr/std__dotenv@0.225.8'
       tsdown:
         specifier: 'catalog:'
         version: 0.12.7(typescript@5.8.3)
@@ -1632,6 +1648,9 @@ packages:
 
   '@jsr/std__dotenv@0.225.5':
     resolution: {integrity: sha512-qrBt3wfQgvXbjo+Up6lyzBGxk0IPhDqW9Jx7CJQUQpsxqhoqnBmD8gn0Mt8i+RHHI9uZFCO+FP122ClAC8yljg==, tarball: https://npm.jsr.io/~/11/@jsr/std__dotenv/0.225.5.tgz}
+
+  '@jsr/std__dotenv@0.225.8':
+    resolution: {integrity: sha512-KcGf0dNnJcQPPLiLXnB2hRmuB1/+L+RRYeEaxmcGwsZe45JrhVtMeULNUy7+0N5h9fr1cMHrGfMtE5xceReQMQ==, tarball: https://npm.jsr.io/~/11/@jsr/std__dotenv/0.225.8.tgz}
 
   '@jsr/std__internal@1.0.12':
     resolution: {integrity: sha512-6xReMW9p+paJgqoFRpOE2nogJFvzPfaLHLIlyADYjKMUcwDyjKZxryIbgcU+gxiTygn8yCjld1HoI0ET4/iZeA==, tarball: https://npm.jsr.io/~/11/@jsr/std__internal/1.0.12.tgz}
@@ -6185,6 +6204,8 @@ snapshots:
       '@jsr/std__assert': 1.0.19
 
   '@jsr/std__dotenv@0.225.5': {}
+
+  '@jsr/std__dotenv@0.225.8': {}
 
   '@jsr/std__internal@1.0.12': {}
 

@@ -71,7 +71,6 @@
     "@logtape/logtape": "workspace:^"
   },
   "devDependencies": {
-    "@sentry/core": "^9.41.0",
     "@std/dotenv": "catalog:",
     "tsdown": "catalog:",
     "typescript": "catalog:"
