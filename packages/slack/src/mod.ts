@@ -12,6 +12,7 @@ export interface SlackSinkOptions {
   readonly batchInterval?: number;
   readonly maxMessageLength?: number;
   readonly maxBufferSize?: number;
+  readonly maxRetries?: number;
   readonly fetch?: typeof globalThis.fetch;
 }
 
@@ -43,6 +44,8 @@ export async function postSlackMessage(
   fetcher: typeof globalThis.fetch,
   webhookUrl: string | URL,
   text: string,
+  currRetries: number,
+  maxRetries: number,
 ): Promise<void> {
   const response = await fetcher(webhookUrl, {
     method: "POST",
@@ -57,7 +60,21 @@ export async function postSlackMessage(
     }),
   });
 
-  if (!response.ok) {
+  if (response.status === 429 && currRetries < maxRetries) {
+    const retryAfter = Number(response.headers.get("retry-after") ?? "1");
+
+    await new Promise<void>((resolve) => {
+      setTimeout(resolve, retryAfter * 1_000);
+    });
+
+    return postSlackMessage(
+      fetcher,
+      webhookUrl,
+      text,
+      currRetries + 1,
+      maxRetries,
+    );
+  } else if (!response.ok) {
     const body = await response.text();
 
     throw new Error(`Slack webhook returned HTTP ${response.status}: ${body}`);
@@ -71,6 +88,7 @@ export function getSlackSink(
   const batchInterval = options.batchInterval ?? 1_000;
   const maxMessageLength = options.maxMessageLength ?? 40_000;
   const maxBufferSize = options.maxBufferSize ?? 1_000;
+  const maxRetries = options.maxRetries ?? 30;
   const formatter = options.formatter ?? defaultTextFormatter;
   const fetcher = options.fetch ?? globalThis.fetch;
 
@@ -120,7 +138,13 @@ export function getSlackSink(
 
       nextSendAt = Date.now() + batchInterval;
 
-      await postSlackMessage(fetcher, options.webhookUrl, message);
+      await postSlackMessage(
+        fetcher,
+        options.webhookUrl,
+        message,
+        0,
+        maxRetries,
+      );
     })()
       .catch(reportError)
       .finally(() => {
